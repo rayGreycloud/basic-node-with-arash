@@ -2,6 +2,14 @@ var express = require('express');
 
 var app = express();
 
+app.use(function(req, res, next) {
+    if (2 < 1) {
+      next();
+    } else {
+      res.json("Permission denied.")
+    }
+});
+
 app.get('/', function(req, res, next) {
     res.json("Home Page");
 });
