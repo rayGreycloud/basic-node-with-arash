@@ -2,20 +2,20 @@ var express = require('express');
 
 var app = express();
 
-app.use(function(req, res, next) {
-    if (2 < 1) {
-      next();
-    } else {
-      res.json("Permission denied.")
-    }
+function checkCredentials(req, res, next) {
+  if (req.params.name === "ok") {
+    next();
+  } else {
+    res.json("Access denied.")
+  }
+};
+
+app.get('/profile/:name', checkCredentials, function(req, res, next) {
+    res.json("This is your profile page!");
 });
 
 app.get('/', function(req, res, next) {
-    res.json("Home Page");
-});
-
-app.get('/catfish', function(req, res, next) {
-  res.json("Catfish");
+  res.json("Home Page");
 });
 
 app.listen(3000, function(err) {
